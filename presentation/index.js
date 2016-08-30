@@ -6,6 +6,7 @@ import {
   Appear,
   BlockQuote,
   Cite,
+  Code,
   CodePane,
   Deck,
   Fill,
@@ -40,14 +41,22 @@ const images = {
   city: require("../assets/city.jpg"),
   kat: require("../assets/kat.png"),
   logo: require("../assets/formidable-logo.svg"),
-  markdown: require("../assets/markdown.png")
+  markdown: require("../assets/markdown.png"),
+  haus: require("../assets/logo_haus.svg")
 };
 
 preloader(images);
 
 const theme = createTheme({
-  primary: "#ff4081"
+  primary: "#F0F0F0",
+  quartenary: "#EBC71E"
 });
+
+function InlineQuote({ children }) {
+  return (
+    <Quote textSize="1em" margin="0.5em auto" italic textColor="black">"{children}"</Quote>
+  );
+}
 
 export default class Presentation extends React.Component {
   render() {
@@ -55,115 +64,111 @@ export default class Presentation extends React.Component {
       <Spectacle theme={theme}>
         <Deck transition={["zoom", "slide"]} transitionDuration={500}>
           <Slide transition={["zoom"]} bgColor="primary">
-            <Heading size={1} fit caps lineHeight={1} textColor="black">
-              Spectacle
+            <Heading size={1} fit textColor="black">
+              Dependency Injection in Node 💉
             </Heading>
-            <Heading size={1} fit caps>
-              A ReactJS Presentation Library
-            </Heading>
-            <Heading size={1} fit caps textColor="black">
-              Where You Can Write Your Decks In JSX
-            </Heading>
-            <Link href="https://github.com/FormidableLabs/spectacle">
-              <Text bold caps textColor="tertiary">View on Github</Text>
-            </Link>
-            <Text textSize="1.5em" margin="20px 0px 0px" bold>Hit Your Right Arrow To Begin!</Text>
+            <Text margin="0.5em auto" bold caps textColor="#00AFAA">Emil Ong</Text>
+            <Text textSize="1em" margin="20px 0px 0px" bold>Head of Engineering</Text>
+            <Image src={images.haus} margin="0 auto 0 -0.5em" height="0.8em"/>
           </Slide>
-          <Slide transition={["slide"]} bgColor="black" notes="You can even put notes on your slide. How awesome is that?">
-            <Image src={images.kat.replace("/", "")} margin="0px auto 40px" height="293px"/>
-            <Heading size={2} caps fit textColor="primary" textFont="primary">
-              Wait what?
-            </Heading>
-          </Slide>
-          <Slide transition={["zoom", "fade"]} bgColor="primary" notes="<ul><li>talk about that</li><li>and that</li></ul>">
-            <CodePane
-              lang="jsx"
-              source={require("raw!../assets/deck.example")}
-              margin="20px auto"
-            />
-          </Slide>
-          <Slide transition={["slide"]} bgImage={images.city.replace("/", "")} bgDarken={0.75}>
-            <Appear fid="1">
-              <Heading size={1} caps fit textColor="primary">
-                Full Width
-              </Heading>
-            </Appear>
-            <Appear fid="2">
-              <Heading size={1} caps fit textColor="tertiary">
-                Adjustable Darkness
-              </Heading>
-            </Appear>
-            <Appear fid="3">
-              <Heading size={1} caps fit textColor="primary">
-                Background Imagery
-              </Heading>
-            </Appear>
-          </Slide>
-          <Slide transition={["zoom", "fade"]} bgColor="primary">
-            <Heading caps fit>Flexible Layouts</Heading>
-            <Layout>
-              <Fill>
-                <Heading size={4} caps textColor="secondary" bgColor="white" margin={10}>
-                  Left
-                </Heading>
-              </Fill>
-              <Fill>
-                <Heading size={4} caps textColor="secondary" bgColor="white" margin={10}>
-                  Right
-                </Heading>
-              </Fill>
-            </Layout>
-          </Slide>
-          <Slide transition={["slide"]} bgColor="black">
-            <BlockQuote>
-              <Quote>Wonderfully formatted quotes</Quote>
-              <Cite>Ken Wheeler</Cite>
-            </BlockQuote>
-          </Slide>
-          <Slide transition={["spin", "zoom"]} bgColor="tertiary">
-            <Heading caps fit size={1} textColor="primary">
-              Inline Markdown
-            </Heading>
-            <Markdown>
-              {`
-![Markdown Logo](${images.markdown.replace("/", "")})
-
-You can write inline images, [Markdown Links](http://commonmark.org), paragraph text and most other markdown syntax
-* Lists too!
-* With ~~strikethrough~~ and _italic_
-* And lets not forget **bold**
-              `}
-            </Markdown>
-          </Slide>
-          <Slide transition={["slide", "spin"]} bgColor="primary">
-            <Heading caps fit size={1} textColor="tertiary">
-              Smooth
-            </Heading>
-            <Heading caps fit size={1} textColor="secondary">
-              Combinable Transitions
-            </Heading>
-          </Slide>
-          <Slide transition={["fade"]} bgColor="secondary" textColor="primary">
+          <Slide>
+            <Heading size={1} fit textColor="black">What is a dependency?</Heading>
             <List>
-              <Appear><ListItem>Inline style based theme system</ListItem></Appear>
-              <Appear><ListItem>Autofit text</ListItem></Appear>
-              <Appear><ListItem>Flexbox layout system</ListItem></Appear>
-              <Appear><ListItem>React-Router navigation</ListItem></Appear>
-              <Appear><ListItem>PDF export</ListItem></Appear>
-              <Appear><ListItem>And...</ListItem></Appear>
+              <ListItem>A component that your code needs to operate</ListItem>
+              <ListItem>In testing terms, another <b>unit</b>, i.e. mockable</ListItem>
+              <ListItem>May behave differently depending on environment</ListItem>
             </List>
           </Slide>
-          <Slide transition={["slide"]} bgColor="primary">
-            <Heading size={1} caps fit textColor="tertiary">
-              Your presentations are interactive
-            </Heading>
-            <Interactive/>
+          {/* need examples */}
+          <Slide>
+            <Heading size={1} fit textColor="black">How does your code get dependencies?</Heading>
+            <List>
+              <ListItem>Functions get arguments</ListItem>
+              <ListItem>Projects and modules use package.json</ListItem>
+              <ListItem>Individual files use <Code>require()</Code></ListItem>
+            </List>
+            <Appear><Text>👆 One of these things is not like the others</Text></Appear>
           </Slide>
-          <Slide transition={["spin", "slide"]} bgColor="tertiary">
-            <Heading size={1} caps fit lineHeight={1.5} textColor="primary">
-              Made with love in Seattle by
-            </Heading>
-            <Link href="http://www.formidablelabs.com"><Image width="100%" src={images.logo}/></Link>
+          <Slide>
+            <Heading size={1} fit textColor="black">❗ Imperative vs Declarative ❓</Heading>
+            <List>
+              <ListItem>Imperative dependencies say, <InlineQuote>I need X and I'll go get it</InlineQuote></ListItem>
+              <ListItem>Declarative dependencies say, <InlineQuote>I need X and I don't care where it comes from</InlineQuote></ListItem>
+            </List>
+          </Slide>
+          <Slide>
+            <Heading size={1} fit textColor="black">❗ Imperative vs Declarative ❓</Heading>
+            <List>
+              <ListItem>Imperative means the unit decides where its dependencies should come from</ListItem>
+              <ListItem>Declarative means something else decides where its dependencies should come from</ListItem>
+            </List>
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">So what's up with require()?</Heading>
+            <Text margin="0.5em auto">It's half-way between declarative and imperative</Text>
+            <List>
+              <ListItem>For npm modules, it's close to declarative</ListItem>
+              <ListItem>For other files, it's imperative and bound to the FS</ListItem>
+            </List>
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Why prefer declarative dependencies?</Heading>
+            <List>
+              <ListItem>Enables unit testing</ListItem>
+              <ListItem>Forcing function for cleaner interfaces</ListItem>
+              <ListItem>Your file shouldn't have to know where everything else is</ListItem>
+            </List>
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">When is the filesystem not ok?</Heading>
+            <List>
+              <ListItem>You need to mock something</ListItem>
+              <ListItem>Project complexity reaches a certain (subjective) size</ListItem>
+            </List>
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">How can you use declarative dependencies in Node?</Heading>
+            <List>
+              <ListItem>Break everything down into NPM modules</ListItem>
+              <ListItem>Hack require() (NODE_PATH, proxyquire, etc.)</ListItem>
+              <ListItem>Dependency Injection Container</ListItem>
+            </List>
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Dependency Injection Containers</Heading>
+            <List>
+              <ListItem>Keep a registry of who needs what and who provides what</ListItem>
+              <ListItem>A registered factory can create a component, given its dependencies</ListItem>
+              <ListItem>Dependencies are injected on factory invocation</ListItem>
+            </List>
+          </Slide>
+          {/* example */}
+          <Slide>
+            <Heading size={2} fit textColor="black">Dependency Injection Containers</Heading>
+            <List>
+              <ListItem>Popular technique in Java</ListItem>
+              <ListItem>Unpopular technique in Ruby (DHH sez go global)</ListItem>
+            </List>
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Example: bottlejs</Heading>
+            {/* example */}
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">A convention for dependency declaration</Heading>
+            {/* example */}
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Using the DI container in tests</Heading>
+            {/* example */}
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Freedom from the filesystem</Heading>
+            {/* example, health checkers? */}
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Service discovery</Heading>
+            {/* example, health checkers? */}
           </Slide>
         </Deck>
       </Spectacle>
