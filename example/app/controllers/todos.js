@@ -43,10 +43,10 @@ function CreateTodosController(Todo) {
       todo.del();
 
       res.status(204).end();
-    },
+    }
   };
 }
 
-module.exports = bottle => {
+module.exports = (bottle) => {
   bottle.service('controller.Todos', CreateTodosController, 'model.Todo');
 };

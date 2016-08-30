@@ -11,7 +11,7 @@ function CreateTodoModel(database) {
 
     list() {
       return database.all('todo');
-    },
+    }
   };
 }
 
