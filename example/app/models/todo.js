@@ -1,3 +1,4 @@
+// Our factory
 function CreateTodoModel(database) {
   return {
     create(content) {
@@ -14,6 +15,9 @@ function CreateTodoModel(database) {
   };
 }
 
+//
+// Register our factory with the bottle that's given to our exported function
+//
 module.exports = (bottle) => {
   bottle.service('model.Todo', CreateTodoModel, 'database');
 };

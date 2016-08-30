@@ -192,8 +192,26 @@ export default class Presentation extends React.Component {
             <Appear><Text bold>Our RoboTexter code requires no changes!</Text></Appear>
           </Slide>
           <Slide>
-            <Heading size={2} fit textColor="black">Let's get real</Heading>
-            {/* example */}
+            <Heading size={2} fit textColor="black">How do we share the bottle?</Heading>
+            <Appear><Text italic>(Take one down, pass it around...)</Text></Appear>
+            <Appear>
+              <div>
+                <Text margin='1em auto' bold>Export a function that takes a bottle:</Text>
+                <CodePane
+                  lang="js"
+                  source={require("raw!../example/app/models/todo.js")}
+                  margin="20px auto"
+                />
+              </div>
+            </Appear>
+          </Slide>
+          <Slide>
+            <Heading size={1} fit textColor="black">Filling the bottle</Heading>
+            <CodePane
+              lang="js"
+              source={require("raw!../example/index.js")}
+              margin="20px auto"
+            />
           </Slide>
           <Slide>
             <Heading size={2} fit textColor="black">Using the DI container in tests</Heading>

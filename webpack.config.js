@@ -41,6 +41,7 @@ module.exports = {
           }
         },
         "ignore": [
+          "example/*.js",
           "example/**/*.js"
         ]
       }
