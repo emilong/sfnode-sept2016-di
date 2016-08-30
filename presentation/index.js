@@ -215,7 +215,20 @@ export default class Presentation extends React.Component {
           </Slide>
           <Slide>
             <Heading size={2} fit textColor="black">Using the DI container in tests</Heading>
-            {/* example */}
+            <Layout style={{ marginLeft: '-3em'}}>
+              <CodePane
+                style={{minWidth:'60%'}}
+                lang="js"
+                source={require("raw!../example/tests/app/controllers/todos.test.js")}
+                margin="20px 20px"
+              />
+              <CodePane
+                style={{minWidth:'45%'}}
+                lang="js"
+                source={require("raw!../example/controllers-example.js")}
+                margin="20px auto"
+              />
+            </Layout>
           </Slide>
           <Slide>
             <Heading size={2} fit textColor="black">Freedom from the filesystem</Heading>
