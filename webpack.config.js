@@ -39,7 +39,10 @@ module.exports = {
               }]
             }]]
           }
-        }
+        },
+        "ignore": [
+          "example/**/*.js"
+        ]
       }
     }, {
       test: /\.css$/,

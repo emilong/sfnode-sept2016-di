@@ -107,14 +107,22 @@ export default class Presentation extends React.Component {
             <Heading size={2} fit textColor="black">So what's up with require()?</Heading>
             <Text margin="0.5em auto">It's half-way between declarative and imperative</Text>
             <List>
-              <ListItem>For npm modules, it's close to declarative</ListItem>
-              <ListItem>For other files, it's imperative and bound to the FS</ListItem>
+              <ListItem>
+                For npm modules, it's close to declarative
+                <br/>
+                <Code textSize="0.8em" margin="auto auto 1em 2em">require('express')</Code>
+              </ListItem>
+              <ListItem>
+                For other files, it's imperative and bound to the FS
+                <br/>
+                <Code textSize="0.8em" margin="auto auto 1em 2em">require('../../models/todo')</Code>
+              </ListItem>
             </List>
           </Slide>
           <Slide>
             <Heading size={2} fit textColor="black">Why prefer declarative dependencies?</Heading>
             <List>
-              <ListItem>Enables unit testing</ListItem>
+              <ListItem>Makes unit testing easier</ListItem>
               <ListItem>Forcing function for cleaner interfaces</ListItem>
               <ListItem>Your file shouldn't have to know where everything else is</ListItem>
             </List>
@@ -138,24 +146,53 @@ export default class Presentation extends React.Component {
             <Heading size={2} fit textColor="black">Dependency Injection Containers</Heading>
             <List>
               <ListItem>Keep a registry of who needs what and who provides what</ListItem>
-              <ListItem>A registered factory can create a component, given its dependencies</ListItem>
+              <ListItem>Factories can create a component, given its dependencies</ListItem>
               <ListItem>Dependencies are injected on factory invocation</ListItem>
             </List>
           </Slide>
-          {/* example */}
           <Slide>
-            <Heading size={2} fit textColor="black">Dependency Injection Containers</Heading>
+            <Heading size={2} fit textColor="black">Example DI container: bottlejs</Heading>
             <List>
-              <ListItem>Popular technique in Java</ListItem>
-              <ListItem>Unpopular technique in Ruby (DHH sez go global)</ListItem>
+              <ListItem>Inspired by Angular's DI container</ListItem>
+              <ListItem>Node and browser compatible</ListItem>
+              <ListItem>Actively maintained and stable</ListItem>
             </List>
           </Slide>
           <Slide>
-            <Heading size={2} fit textColor="black">Example: bottlejs</Heading>
-            {/* example */}
+            <Heading size={2} fit textColor="black">Declaring dependencies in bottlejs</Heading>
+            <CodePane
+              lang="js"
+              source={require("raw!../example/simple-decl.js")}
+              margin="20px auto"
+            />
           </Slide>
           <Slide>
-            <Heading size={2} fit textColor="black">A convention for dependency declaration</Heading>
+            <Heading size={2} fit textColor="black">Using dependencies in bottlejs</Heading>
+            <CodePane
+              lang="js"
+              source={require("raw!../example/simple-usage.js")}
+              margin="20px auto"
+            />
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Multiple factories for the same dependency</Heading>
+            <CodePane
+              lang="js"
+              source={require("raw!../example/simple-choice-1.js")}
+              margin="20px auto"
+            />
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Choosing the factory at runtime</Heading>
+            <CodePane
+              lang="js"
+              source={require("raw!../example/simple-choice-2.js")}
+              margin="20px auto"
+            />
+            <Appear><Text bold>Our RoboTexter code requires no changes!</Text></Appear>
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Let's get real</Heading>
             {/* example */}
           </Slide>
           <Slide>
