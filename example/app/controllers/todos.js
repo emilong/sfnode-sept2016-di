@@ -5,7 +5,6 @@ function CreateTodosController(Todo) {
     },
 
     create(req, res) {
-      console.log(req.body);
       res.json(Todo.create(req.body.content));
     },
 

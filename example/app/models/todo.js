@@ -14,6 +14,6 @@ function CreateTodoModel(database) {
   };
 }
 
-module.exports = bottle => {
+module.exports = (bottle) => {
   bottle.service('model.Todo', CreateTodoModel, 'database');
 };

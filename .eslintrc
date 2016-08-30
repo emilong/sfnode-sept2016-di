@@ -5,6 +5,8 @@
 "rules":
   "indent": [2, 2, {"SwitchCase": 1}]
   "max-len": 0
+  "quotes": [1, "single"]
+  "func-style": [1, 'declaration']
 
 "env":
   "browser": true,

@@ -12,6 +12,6 @@ function CreateTodosRoute(Todos) {
   return router;
 }
 
-module.exports = bottle => {
+module.exports = (bottle) => {
   bottle.service('route.Todos', CreateTodosRoute, 'controller.Todos');
 };

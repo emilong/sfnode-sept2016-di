@@ -32,7 +32,7 @@ function CreateMemoryDatabase() {
       }
 
       const model = Object.create(MemoryModel.prototype, {
-        __DB: { value: DB, },
+        __DB: { value: DB },
         __type: { value: type },
         id: {
           enumerable: true,
@@ -64,11 +64,11 @@ function CreateMemoryDatabase() {
         acc.push(DB[type].models[id]);
         return acc;
       }, []);
-    },
+    }
   };
 }
 
-module.exports = bottle => {
+module.exports = (bottle) => {
   if (process.env.USE_REAL_DB) {
     bottle.service('database', CreateRealDatabaseConnector);
   } else {
