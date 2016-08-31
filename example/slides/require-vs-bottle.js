@@ -12,11 +12,11 @@
 
 // require() approach
 // ./test/app/controllers/todos.func.test.js
-const database = require('../../../config/database.js')
-const TodoModel = require('../../../app/model/todo.js')(database);
-const Todos = require('../../../app/controllers/todos.js')(TodoModel);
+const databaseRel = require('../../../config/database.js')
+const TodoModelRel = require('../../../app/model/todo.js')(databaseRel);
+const TodosRel = require('../../../app/controllers/todos.js')(TodoModelRel);
 
 // Using NODE_PATH=root
-const database = require('config/database.js')
-const TodoModel = require('app/model/todo.js')(database);
-const Todos = require('app/controllers/todos.js')(TodoModel);
+const databaseRoot = require('config/database.js')
+const TodoModelRoot = require('app/model/todo.js')(databaseRoot);
+const TodosRoot = require('app/controllers/todos.js')(TodoModelRoot);
