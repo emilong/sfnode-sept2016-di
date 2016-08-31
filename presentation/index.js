@@ -67,9 +67,15 @@ export default class Presentation extends React.Component {
             <Heading size={1} fit textColor="black">
               Dependency Injection in Node 💉
             </Heading>
-            <Text margin="0.5em auto" bold caps textColor="#00AFAA">Emil Ong</Text>
+            <Text margin="0.5em auto 0.2em" bold caps textColor="#00AFAA">Emil Ong</Text>
             <Text textSize="1em" margin="20px 0px 0px" bold>Head of Engineering</Text>
             <Image src={images.haus} margin="0 auto 0 -0.5em" height="0.8em"/>
+
+            <Layout>
+              <Text margin="1em auto" textSize="1em">@OngEmil</Text>
+              <Text margin="1em auto" textSize="1em">engineering.haus.com</Text>
+              <Text margin="1em auto" textSize="1em">@haushq</Text>
+            </Layout>
           </Slide>
           <Slide>
             <Heading size={1} fit textColor="black">What is a dependency?</Heading>
@@ -119,7 +125,9 @@ export default class Presentation extends React.Component {
               </ListItem>
             </List>
           </Slide>
-          <Slide>
+          <Slide
+            notes="Can feed the unit its dependencies.<br/>Cleaner interfaces - makes you declare what you need, avoid requires all over the place."
+          >
             <Heading size={2} fit textColor="black">Why prefer declarative dependencies?</Heading>
             <List>
               <ListItem>Makes unit testing easier</ListItem>
@@ -127,19 +135,20 @@ export default class Presentation extends React.Component {
               <ListItem>Your file shouldn't have to know where everything else is</ListItem>
             </List>
           </Slide>
-          <Slide>
-            <Heading size={2} fit textColor="black">When is the filesystem not ok?</Heading>
+          <Slide notes="If you're ok with functional/multi-unit tests, not a problem.">
+            <Heading size={2} fit textColor="black">When is imperative not ok?</Heading>
             <List>
               <ListItem>You need to mock something</ListItem>
               <ListItem>Project complexity reaches a certain (subjective) size</ListItem>
             </List>
+            <Text>The FS as an imperative mechanism is particularly painful</Text>
           </Slide>
           <Slide>
             <Heading size={2} fit textColor="black">How can you use declarative dependencies in Node?</Heading>
             <List>
               <ListItem>Break everything down into NPM modules</ListItem>
               <ListItem>Hack require() (NODE_PATH, proxyquire, etc.)</ListItem>
-              <ListItem>Dependency Injection Container</ListItem>
+              <ListItem>Use a Dependency Injection Container</ListItem>
             </List>
           </Slide>
           <Slide>
@@ -191,7 +200,7 @@ export default class Presentation extends React.Component {
             />
             <Appear><Text bold>Our RoboTexter code requires no changes!</Text></Appear>
           </Slide>
-          <Slide>
+          <Slide notes="it's all well and good when the bottle instance is in a single file, but">
             <Heading size={2} fit textColor="black">How do we share the bottle?</Heading>
             <Appear><Text italic>(Take one down, pass it around...)</Text></Appear>
             <Appear>
@@ -214,12 +223,19 @@ export default class Presentation extends React.Component {
             />
           </Slide>
           <Slide>
+            <Heading size={1} fit textColor="black">What can you do with a full bottle?</Heading>
+            <List>
+              <ListItem>Access and instantiate any declared dependency, with <i>its</i> dependencies</ListItem>
+              <ListItem>Override dependencies as needed for testing</ListItem>
+            </List>
+          </Slide>
+          <Slide>
             <Heading size={2} fit textColor="black">Using the DI container in tests</Heading>
             <Layout style={{ marginLeft: '-3em'}}>
               <CodePane
                 style={{minWidth:'60%'}}
                 lang="js"
-                source={require("raw!../example/tests/app/controllers/todos.test.js")}
+                source={require("raw!../example/tests/app/controllers/todos.unit.test.js")}
                 margin="20px 20px"
               />
               <CodePane
@@ -231,8 +247,28 @@ export default class Presentation extends React.Component {
             </Layout>
           </Slide>
           <Slide>
-            <Heading size={2} fit textColor="black">Freedom from the filesystem</Heading>
-            {/* example, health checkers? */}
+            <Heading size={2} fit textColor="black">Benefits of unit testing this way</Heading>
+            <List>
+              <ListItem>We know the dependencies of our unit under test</ListItem>
+              <ListItem>Can interpose on those dependencies for interaction tests</ListItem>
+              <ListItem>Can ignore where the unit lives on the filesystem</ListItem>
+            </List>
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Same container, but with functional tests!</Heading>
+            <CodePane
+              lang="js"
+              source={require("raw!../example/tests/app/controllers/todos.func.test.js")}
+              margin="20px auto"
+            />
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Unit & Functional with the same container</Heading>
+            <List>
+              <ListItem>Unit tests to isolate logic errors</ListItem>
+              <ListItem>Functional tests to validate setup and interface matching</ListItem>
+              <ListItem>Same container means we're testing the real code in both cases</ListItem>
+            </List>
           </Slide>
           <Slide>
             <Heading size={2} fit textColor="black">Service discovery</Heading>
