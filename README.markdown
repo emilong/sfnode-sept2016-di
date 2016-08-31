@@ -1,21 +1,48 @@
-# Spectacle Boilerplate
+# Dependency Injection in Node
 
-## Reference
+Presented at the [https://www.meetup.com/sfnode/events/225747576/](September SFNode Meetup).
 
-The Spectacle core API is available at [https://github.com/FormidableLabs/spectacle/blob/master/README.markdown](https://github.com/FormidableLabs/spectacle/blob/master/README.markdown).
+Made using the awesome [https://github.com/FormidableLabs/spectacle-boilerplate](Spectacle
+Boilerplate).
 
-## Development
+## Viewing
 
-After downloading the boilerplate, your first order of business is to open terminal and run `npm install`
+Run `npm install`, then `npm start`.
 
-Next, run `rm -R .git` to remove the existing version control.
+Open a browser and hit [http://localhost:3000](http://localhost:3000).
 
-Then, to start up the local server, run `npm start`
+## Example code
 
-Open a browser and hit [http://localhost:3000](http://localhost:3000), and we are ready to roll
+The example subdirectory contains a project with some of the ideas presented in the slides.
+As per usual:
 
-## Build & Deployment
+```shell
+cd example
+npm install
+npm test
+npm start
+```
 
-Building the dist version of the project is as easy as running `npm run build`
+To use it:
 
-If you want to deploy the slideshow to surge, run `npm run deploy`
+```shell
+# Create a todo
+curl -XPOST localhost:7000/todos \
+  -d '{"content":"this is the todo content"}' \
+  -H 'Content-Type: application/json'
+
+# List all the todos
+curl localhost:7000/todos
+
+# Get a todo, by id
+curl localhost:7000/todos/1
+
+# Update the todo
+curl -XPUT localhost:7000/todos/1 \
+  -d '{"content":"noo todo content"}' \
+  -H 'Content-Type: application/json'
+
+# Delete the todo
+curl -XDELETE localhost:7000/todos/1
+
+```
