@@ -1,9 +1,8 @@
 # Dependency Injection in Node
 
-Presented at the [https://www.meetup.com/sfnode/events/225747576/](September SFNode Meetup).
+Presented at the [September SFNode Meetup](https://www.meetup.com/sfnode/events/225747576/).
 
-Made using the awesome [https://github.com/FormidableLabs/spectacle-boilerplate](Spectacle
-Boilerplate).
+Made using the awesome [Spectacle Boilerplate](https://github.com/FormidableLabs/spectacle-boilerplate).
 
 ## Viewing
 
