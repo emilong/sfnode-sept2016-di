@@ -1,11 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const bottle = require('.');
+const bottle = require('.')();
 
+//
+// Set up our app
+//
 const app = express();
 app.use(bodyParser.json());
 
+// Crawl the container to find all components prefixed with "route."
 bottle.container.route.$list().forEach(name => {
+  // Register them as routers with the application
+  // e.g. route.todos maps to => /todos
   app.use(`/${name}`, bottle.container.route[name]);
 });
 

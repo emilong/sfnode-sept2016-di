@@ -1,5 +1,6 @@
 //
-// Different factories can provide different implementations
+// Different factories can provide
+// different implementations
 //
 const sms = require('sms-client');
 
@@ -10,7 +11,7 @@ function RealSmsProvider() {
 function DevSmsProvider() {
   return {
     sendText(number, message) {
-      console.log('sending text', message, 'to', number);
+      console.log(message, '->', number);
     }
   }
 }

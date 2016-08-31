@@ -1,4 +1,5 @@
 // Create a DI container instance
+// Knows about all your dependencies and components
 const bottle = require('bottlejs')();
 
 // Create and register our database client factory

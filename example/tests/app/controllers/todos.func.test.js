@@ -1,4 +1,4 @@
-const app = require('index.js')();
+const bottle = require('index.js')();
 
 describe('controller.Todos functional tests', () => {
   describe('list', () => {
@@ -6,13 +6,13 @@ describe('controller.Todos functional tests', () => {
 
     beforeEach(() => {
       // Don't override the dependencies this time, use them
-      todoContent.forEach((content) => app.container.model.Todo.create(content));
+      todoContent.forEach((content) => bottle.container.model.Todo.create(content));
     });
 
     it('returns the real todos as json in the response', () => {
       const res = { json: sinon.spy() }
 
-      app.container.controller.Todos.list('ignored', res);
+      bottle.container.controller.Todos.list('ignored', res);
 
       expect(res.json).to.have.been.called;
 

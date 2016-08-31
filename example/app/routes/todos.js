@@ -1,5 +1,7 @@
 const express = require('express');
 
+// Create a router with CRUD routes,
+// hook it up to our controller actions
 function CreateTodosRoute(Todos) {
   const router = new express.Router();
 
@@ -13,5 +15,8 @@ function CreateTodosRoute(Todos) {
 }
 
 module.exports = (bottle) => {
-  bottle.service('route.Todos', CreateTodosRoute, 'controller.Todos');
+  bottle.service('route.Todos',
+    CreateTodosRoute,
+    'controller.Todos'
+  );
 };

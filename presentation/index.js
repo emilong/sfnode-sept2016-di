@@ -4,12 +4,9 @@ import React from "react";
 // Import Spectacle Core tags
 import {
   Appear,
-  BlockQuote,
-  Cite,
   Code,
   CodePane,
   Deck,
-  Fill,
   Heading,
   Image,
   Layout,
@@ -38,6 +35,8 @@ require("spectacle/lib/themes/default/index.css");
 
 
 const images = {
+  dependency: require("../assets/dependency-graph.gif"),
+  dontCare: require("../assets/dont-even-care.jpg"),
   city: require("../assets/city.jpg"),
   kat: require("../assets/kat.png"),
   logo: require("../assets/formidable-logo.svg"),
@@ -72,10 +71,33 @@ export default class Presentation extends React.Component {
             <Image src={images.haus} margin="0 auto 0 -0.5em" height="0.8em"/>
 
             <Layout>
-              <Text margin="1em auto" textSize="1em">@OngEmil</Text>
-              <Text margin="1em auto" textSize="1em">engineering.haus.com</Text>
-              <Text margin="1em auto" textSize="1em">@haushq</Text>
+              <Text margin="1em auto" textSize="1em"><Link target="_blank" href="https://twitter.com/OngEmil">@OngEmil</Link></Text>
+              <Text margin="1em auto" textSize="1em"><Link target="_blank" href="https://engineering.haus.com">engineering.haus.com</Link></Text>
+              <Text margin="1em auto" textSize="1em"><Link target="_blank" href="https://twitter.com/haushq">@haushq</Link></Text>
             </Layout>
+          </Slide>
+          <Slide>
+            <Heading size={1} fit textColor="black">Background & Motivation</Heading>
+            <List>
+              <ListItem>Came to Node from Ruby, Java experience</ListItem>
+              <ListItem>Just getting started, decided on a monolith</ListItem>
+              <ListItem>REST backend in Node using Express</ListItem>
+              <ListItem>Not a huge app, but non-trivial and definitely not a microservice</ListItem>
+              <ListItem>Code sharing for both HTTP endpoints and background tasks</ListItem>
+            </List>
+          </Slide>
+          <Slide>
+            <Heading size={1} fit textColor="black">Design considerations</Heading>
+            <List>
+              <ListItem>Testing, file layout, and how they interact</ListItem>
+              <ListItem>Wanted to use patterns such as:
+                <List margin="auto 2em">
+                  <ListItem>Dependency injection</ListItem>
+                  <ListItem>Aspect-orientation</ListItem>
+                  <ListItem>Convention-over-configuration</ListItem>
+                </List>
+              </ListItem>
+            </List>
           </Slide>
           <Slide>
             <Heading size={1} fit textColor="black">What is a dependency?</Heading>
@@ -85,7 +107,6 @@ export default class Presentation extends React.Component {
               <ListItem>May behave differently depending on environment</ListItem>
             </List>
           </Slide>
-          {/* need examples */}
           <Slide>
             <Heading size={1} fit textColor="black">How does your code get dependencies?</Heading>
             <List>
@@ -104,10 +125,13 @@ export default class Presentation extends React.Component {
           </Slide>
           <Slide>
             <Heading size={1} fit textColor="black">❗ Imperative vs Declarative ❓</Heading>
-            <List>
-              <ListItem>Imperative means the unit decides where its dependencies should come from</ListItem>
-              <ListItem>Declarative means something else decides where its dependencies should come from</ListItem>
-            </List>
+            <Layout>
+              <List>
+                <ListItem>Imperative means the unit decides where its dependencies should come from</ListItem>
+                <ListItem>Declarative means something else decides where its dependencies should come from</ListItem>
+              </List>
+              <Image src={images.dontCare} margin="1em auto"/>
+            </Layout>
           </Slide>
           <Slide>
             <Heading size={2} fit textColor="black">So what's up with require()?</Heading>
@@ -153,11 +177,14 @@ export default class Presentation extends React.Component {
           </Slide>
           <Slide>
             <Heading size={2} fit textColor="black">Dependency Injection Containers</Heading>
+            <Layout>
             <List>
               <ListItem>Keep a registry of who needs what and who provides what</ListItem>
               <ListItem>Factories can create a component, given its dependencies</ListItem>
               <ListItem>Dependencies are injected on factory invocation</ListItem>
             </List>
+            <Image src={images.dependency} margin="auto 1em" width={400} height={300}/>
+            </Layout>
           </Slide>
           <Slide>
             <Heading size={2} fit textColor="black">Example DI container: bottlejs</Heading>
@@ -171,7 +198,7 @@ export default class Presentation extends React.Component {
             <Heading size={2} fit textColor="black">Declaring dependencies in bottlejs</Heading>
             <CodePane
               lang="js"
-              source={require("raw!../example/simple-decl.js")}
+              source={require("raw!../example/slides/simple-decl.js")}
               margin="20px auto"
             />
           </Slide>
@@ -179,40 +206,40 @@ export default class Presentation extends React.Component {
             <Heading size={2} fit textColor="black">Using dependencies in bottlejs</Heading>
             <CodePane
               lang="js"
-              source={require("raw!../example/simple-usage.js")}
+              source={require("raw!../example/slides/simple-usage.js")}
               margin="20px auto"
             />
           </Slide>
-          <Slide>
+          <Slide notes="not required for every service, buy you have this option">
             <Heading size={2} fit textColor="black">Multiple factories for the same dependency</Heading>
-            <CodePane
-              lang="js"
-              source={require("raw!../example/simple-choice-1.js")}
-              margin="20px auto"
-            />
-          </Slide>
-          <Slide>
-            <Heading size={2} fit textColor="black">Choosing the factory at runtime</Heading>
-            <CodePane
-              lang="js"
-              source={require("raw!../example/simple-choice-2.js")}
-              margin="20px auto"
-            />
+            <Layout>
+              <CodePane
+                style={{minWidth:'50%'}}
+                lang="js"
+                source={require("raw!../example/slides/simple-choice-1.js")}
+                margin="20px 20px 20px -10px"
+              />
+              <CodePane
+                style={{minWidth:'50%'}}
+                lang="js"
+                source={require("raw!../example/slides/simple-choice-2.js")}
+                margin="20px auto"
+              />
+            </Layout>
             <Appear><Text bold>Our RoboTexter code requires no changes!</Text></Appear>
           </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">What about bigger applications?</Heading>
+            <Appear><Text margin='0.5em auto'>Let's look at an MVC example with a CRUD service for Todos</Text></Appear>
+          </Slide>
           <Slide notes="it's all well and good when the bottle instance is in a single file, but">
-            <Heading size={2} fit textColor="black">How do we share the bottle?</Heading>
-            <Appear><Text italic>(Take one down, pass it around...)</Text></Appear>
-            <Appear>
-              <div>
-                <Text margin='1em auto' bold>Export a function that takes a bottle:</Text>
-                <CodePane
-                  lang="js"
-                  source={require("raw!../example/app/models/todo.js")}
-                  margin="20px auto"
-                />
-              </div>
-            </Appear>
+            <Heading size={2} fit textColor="black">How do we register our components?</Heading>
+            <Text margin='0.5em auto'>Export a function that takes a bottle:</Text>
+            <CodePane
+              lang="js"
+              source={require("raw!../example/slides/simplified-todo-model.js")}
+              margin="20px auto"
+            />
           </Slide>
           <Slide>
             <Heading size={1} fit textColor="black">Filling the bottle</Heading>
@@ -231,17 +258,17 @@ export default class Presentation extends React.Component {
           </Slide>
           <Slide>
             <Heading size={2} fit textColor="black">Using the DI container in tests</Heading>
-            <Layout style={{ marginLeft: '-3em'}}>
+            <Layout style={{ marginLeft: '-2em'}}>
               <CodePane
                 style={{minWidth:'60%'}}
                 lang="js"
-                source={require("raw!../example/tests/app/controllers/todos.unit.test.js")}
-                margin="20px 20px"
+                source={require("raw!../example/tests/app/controllers/todos.unit.test.js").split('\n').slice(2).join('\n')}
+                margin="20px 20px 20px auto"
               />
               <CodePane
                 style={{minWidth:'45%'}}
                 lang="js"
-                source={require("raw!../example/controllers-example.js")}
+                source={require("raw!../example/slides/controllers-example.js")}
                 margin="20px auto"
               />
             </Layout>
@@ -258,7 +285,15 @@ export default class Presentation extends React.Component {
             <Heading size={2} fit textColor="black">Same container, but with functional tests!</Heading>
             <CodePane
               lang="js"
-              source={require("raw!../example/tests/app/controllers/todos.func.test.js")}
+              source={require("raw!../example/tests/app/controllers/todos.func.test.js").split('\n').slice(2).join('\n')}
+              margin="20px auto"
+            />
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">require() vs bottle lookup</Heading>
+            <CodePane
+              lang="js"
+              source={require("raw!../example/slides/require-vs-bottle.js")}
               margin="20px auto"
             />
           </Slide>
@@ -271,8 +306,62 @@ export default class Presentation extends React.Component {
             </List>
           </Slide>
           <Slide>
-            <Heading size={2} fit textColor="black">Service discovery</Heading>
-            {/* example, health checkers? */}
+            <Heading size={1} fit textColor="black">Service discovery</Heading>
+            <List>
+              <ListItem>If we use appropriate naming conventions, we can find all components of a type</ListItem>
+              <ListItem>At runtime, we can enumerate them in the container for cool tricks like plugins</ListItem>
+              <ListItem>Can use as a way of implementing Convention over Configuration (CoC)</ListItem>
+            </List>
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Example: Routes in Express</Heading>
+            <Layout style={{ marginLeft: '-2em'}}>
+              <CodePane
+                style={{minWidth:'60%'}}
+                lang="js"
+                source={require("raw!../example/slides/simplified-server.js")}
+                margin="20px 20px 20px auto"
+              />
+              <CodePane
+                style={{minWidth:'45%'}}
+                lang="js"
+                source={require("raw!../example/app/routes/todos.js")}
+                margin="20px auto"
+              />
+            </Layout>
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Other DI Container tricks</Heading>
+            <List>
+              <ListItem>Plugins</ListItem>
+              <ListItem>Code reuse, e.g. controllers vs background tasks for the same business logic</ListItem>
+              <ListItem>Aspect-oriented enhancement (bottle decorators)</ListItem>
+            </List>
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Why not DI containers? 👿</Heading>
+            <List>
+              <ListItem>Probably overkill for very small apps or microservices</ListItem>
+              <ListItem>Not used widely in JS/Node, so might be a learning curve</ListItem>
+              <ListItem>Retrofitting existing apps might be tricky</ListItem>
+            </List>
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Conclusion</Heading>
+            <List>
+              <ListItem>DI containers are a great way to do both injection and service discovery</ListItem>
+              <ListItem>Can use as a way of implementing Convention over Configuration (CoC)</ListItem>
+              <ListItem>Enables multiple testing methodologies easily</ListItem>
+            </List>
+          </Slide>
+          <Slide>
+            <Heading size={2} fit textColor="black">Thanks! 🙏</Heading>
+            <Layout>
+              <Text margin="1em auto" textSize="1em"><Link target="_blank" href="https://twitter.com/OngEmil">@OngEmil</Link></Text>
+              <Text margin="1em auto" textSize="1em"><Link target="_blank" href="https://engineering.haus.com">engineering.haus.com</Link></Text>
+              <Text margin="1em auto" textSize="1em"><Link target="_blank" href="https://twitter.com/haushq">@haushq</Link></Text>
+            </Layout>
+            <Text margin="1em auto" textSize="1em">(Obvs, we're hiring: <Link target="_blank" href="https://haus.com/jobs">https://haus.com/jobs)</Link></Text>
           </Slide>
         </Deck>
       </Spectacle>
