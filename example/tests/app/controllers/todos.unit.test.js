@@ -1,6 +1,6 @@
-const app = require('index.js');
+const app = require('index.js')();
 
-describe('controller.Todos', () => {
+describe('controller.Todos unit tests', () => {
   describe('list', () => {
     const fakeTodos = [{
       id: 1,
